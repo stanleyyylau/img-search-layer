@@ -20,12 +20,35 @@ db.once("open", function(){
 });
 //DB connection part//
 
+app.use(express.static('public'));
+
 
 app.get('/',function(req,res){
-    res.send("welcome to image search API");
+    res.send(index.html);
 })
 
 app.use('/api', routes);
+
+
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next){
+	var err = new Error("Not Found");
+	err.status = 404;
+	next(err);
+});
+
+// Error Handler
+
+app.use(function(err, req, res, next){
+	res.status(err.status || 500);
+	res.json({
+		error: {
+			message: err.message
+		}
+	});
+});
 
 
 
