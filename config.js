@@ -21,8 +21,8 @@ var config = (function(){
   var mongoose = require('mongoose');
   var Schema = mongoose.Schema;
   var imagelayerSchema = new Schema({
-    search_query: {type:String, required: true}
-    created_at: {type:Date, default: new Data()}
+    search_query: {type:String, required: true},
+    created_at: {type:Date, default: new Date()}
   });
   var imageLayer = mongoose.model('imgLayer', imagelayerSchema);
 
