@@ -28,7 +28,7 @@ router.get('/latest', function(req, res){
   })
 });
 
-router.get('/:string', function(req, res){
+router.get('/search/:string', function(req, res){
   var query = req.params.string;
   var offset;
   if(req.query.offset){
