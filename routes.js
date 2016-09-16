@@ -4,6 +4,30 @@ var config = require('./config.js');
 var rp = require('request-promise');
 
 
+router.get('/latest', function(req, res){
+  console.log('I will go to db and get the latest search query');
+  config.dbModel.find({},function(err, docs){
+    if(err) return console.log(err);
+    var sortedArray = [];
+    for(var i = 1; i<11; i++){
+      if(docs[docs.length-i]){
+        sortedArray.push(docs[docs.length-i])
+      }else{
+        break;
+      }
+    }
+    var pureArray = [];
+    sortedArray.forEach(function(value){
+      var obj = {
+        search_query: value.search_query,
+        search_at: value.created_at
+      }
+      pureArray.push(obj);
+    })
+    res.json(pureArray);
+  })
+});
+
 router.get('/:string', function(req, res){
   var query = req.params.string;
   var offset;
@@ -36,7 +60,7 @@ router.get('/:string', function(req, res){
         }
         optimisedData.push(obj);
       })
-      
+
       // console.log(optimisedData);
       //save string to db and json it back to client
       var newQuery = new config.dbModel({
@@ -60,9 +84,7 @@ router.get('/:string', function(req, res){
 
 });
 
-router.get('/latest', function(req, res){
-  console.log('I will go to db and get the latest search query');
-});
+
 
 
 
