@@ -21,7 +21,12 @@ db.once("open", function(){
 //DB connection part//
 
 
+app.get('/',function(req,res){
+    res.send("welcome to image search API");
+})
+
 app.use('/api', routes);
+
 
 
 app.listen(port, function(){
