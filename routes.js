@@ -36,7 +36,22 @@ router.get('/:string', function(req, res){
         }
         optimisedData.push(obj);
       })
-      res.send(optimisedData);
+      
+      // console.log(optimisedData);
+      //save string to db and json it back to client
+      var newQuery = new config.dbModel({
+        search_query: query
+      });
+      newQuery.save(function(err, doc){
+        if(err){
+          return console.log(err);
+        }else {
+          console.log(doc);
+          console.log('new query save');
+          res.json(optimisedData);
+        }
+      })
+
     })
     .catch(function (err) {
         // API call failed...
